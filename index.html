@@ -38,6 +38,9 @@ button:hover {
   var timePlaying = 0;
   var timeEvent = true;
   var display = {};
+  var research = {};
+  var increments = [1,1,1];
+  var wages = [10,20,50];
   var totalFunds = 0;
   var HScount = 0;
   var HSstock = 0;
@@ -48,7 +51,8 @@ button:hover {
   var HSdemand = 50;
   var HSprice = 50;
   var Rfunds = 0;
-  var Projects = [0,1,2];
+  var Research = [0,1,2];
+  var ResearchFundingAuto = 0;
   function upupdowndownleftrightleftrightba(quantity,password){
     if(password === "swordfish"){
       HScount = quantity;
@@ -76,8 +80,9 @@ button:hover {
         document.getElementById("UL1").style.visibility = "visible";
         if(totalFunds > 20000){
           document.getElementById("UL2").style.visibility = "visible";
+          document.getElementById("UL3").style.visibility = "visible";
           if(totalFunds > 25000){
-            document.getElementById("UL3").style.visibility = "visible";
+            document.getElementById("UL4").style.visibility = "visible";
           }
         }
       }
@@ -109,16 +114,43 @@ button:hover {
     switch(type){
       case "telephonist":
         if(totalFunds>10){
-          HSingressAuto++;
-          totalFunds -= 10;
+          HSingressAuto += increments[0];
+          totalFunds -= wages[0];
+          wages[0]++;
         }
       break;
       case "salesman":
         if(totalFunds>20){
-          HSegressAuto++;
-          totalFunds -= 20;
+          HSegressAuto += increments[1];
+          totalFunds -= wages[1];
+          wages[1]++;
         }
       break;
+      case "researcher":
+        if(totalFunds>20){
+          ResearchFundingAuto += increments[2];
+          totalFunds -= wages[2];
+          wages[2]++;
+        }
+      break;
+    }
+  };
+  function research(type,funds,affected,increase){
+    if(Rfunds>funds){
+      if(type==="Addition"){
+        document.getElementById("UL"+affected).style.visibility = "visible";
+      }
+      if(type==="Enhancement"){
+        increments[affected] += increase;
+      }
+    }
+  };
+  function RnD(way){
+    if(way === "to"){
+      
+    }
+    if(way === "fro"){
+    
     }
   };
   function initialise(){
@@ -129,14 +161,14 @@ button:hover {
     display.Stock = document.getElementById("HSstock");
     display.ResearchFunds = document.getElementById("RFunds");
     document.getElementById("init").style.visibility = "hidden";
-    for(var i = 0;i<4;i++){
+    for(var i = 0;i<5;i++){
       document.getElementById("UL"+i).style.visibility = "hidden";
     }
     document.getElementById("game").style.visibility = "visible";
   };
   function save(){
     document.cookie = "HSC="+HScount+";Funds="+totalFunds+";path=/";
-  }
+  };
   function getCookie(cname) { //Cookie Code from W3
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -150,11 +182,11 @@ button:hover {
         }
     }
     return "";
-  }
+  };
   function load(){
     HScount = getCookie("HSC");
     totalFunds = getCookie("Funds");
-  }
+  };
 </script>
 </head>
 <body onLoad="StartTime()">
@@ -167,7 +199,8 @@ button:hover {
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
   <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button><br>
-  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button>
+  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button><br>
+  <button onClick="RnD('to')" id="UL3" >Fund a little research</button><br>  
   <button onClick="HSreprice(true)">Raise your price</button><br>
   <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
@@ -183,7 +216,7 @@ button:hover {
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
   </td>
   
-  <td width=25% id="UL3"> <h2>Project Centre</h2><br>
+  <td width=25% id="UL4"> <h2>Project Centre</h2><br>
     
   </td>
   </tr></table>
