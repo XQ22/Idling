@@ -29,11 +29,7 @@ button:hover {
 button:active {
   color: #eceef2;
 }
-
-.contents {
-  -webkit-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-}  
+ 
 </style>
 <script>
   var Display = {
@@ -43,12 +39,12 @@ button:active {
   var HSingress = 1;
   function HSincome(){
     HScount += HSingress
-    Display.HSC.innerHTML = HSCount;
+    Display.HSC.innerHTML = HScount;
   }
 </script>
 </head>
 <body>
-Hotstoppers Created: <div id="HScreated"></div>
+  <h1>Hotstoppers Created: <div id="HScreated">0</div></h1>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button>
 </body>
 </html>
