@@ -40,10 +40,15 @@ button:active {
     HSC:document.getElementById("HScreated")
   };
   var HScount = 0;
+  var HSingress = 1;
+  function HSincome(){
+    HScount += HSingress
+    Display.HSC.innerHTML = HSCount;
+  }
 </script>
 </head>
 <body>
 Hotstoppers Created: <div id="HScreated"></div>
-  
+  <button onClick="HSincome()">Order a shipment of hotstoppers</button>
 </body>
 </html>
