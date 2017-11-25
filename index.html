@@ -25,26 +25,24 @@ button {
 button:hover {
   color: #ccced2;
 }
-
-button:active {
-  color: #eceef2;
-}
  
 </style>
 <script>
-  var Display = {
-    HSC:document.getElementById("HScreated")
-  };
+  var display = {};
   var HScount = 0;
   var HSingress = 1;
   function HSincome(){
     HScount += HSingress
-    Display.HSC.innerHTML = HScount;
-  }
+    display.HSC.innerHTML = HScount;
+  };
+  function initialise(){
+    display.HSC = document.getElementById("HScreated")
+  };
 </script>
 </head>
 <body>
   <h1>Hotstoppers Created: <div id="HScreated">0</div></h1>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button>
+  <button onClick="initialise()">Initialise game</button>
 </body>
 </html>
