@@ -84,7 +84,7 @@ button:hover {
     }
     var t = setTimeout(StartTime, 50);
     display.HSC.innerHTML = HScount;
-    display.Funds.innerHTML = totalFunds/100;
+    display.Funds.innerHTML = totalFunds/100 + "." + totalFunds%100;
     display.Demand.innerHTML = HSdemand;
     display.Price.innerHTML = HSprice;
     display.Stock.innerHTML = HSstock;
