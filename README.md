@@ -6,5 +6,7 @@ HDC was inspired by a combination of two things: [Paperclips](http://www.decisio
 
 ## Schedule
 Milestone 1 - Have Research system
+
 Milestone 2 - Have Project system
+
 Milestone 3 - Beta Release
