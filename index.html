@@ -75,7 +75,7 @@ button:hover {
         }
       }
     }
-    var t = setTimeout(StartTime, 500);
+    var t = setTimeout(StartTime, 50);
     display.HSC.innerHTML = HScount;
     display.Funds.innerHTML = totalFunds/100;
     display.Demand.innerHTML = HSdemand;
@@ -83,6 +83,7 @@ button:hover {
   };
   function HSincome(){
     HScount += HSingress;
+    HSstock += HSingress;
   };
   function HSdelivery(){
   
@@ -95,7 +96,7 @@ button:hover {
       break;
       case "salesman":
         HSegressAuto++;
-        Funds -= 10;
+        Funds -= 20;
       break;
     }
   };
@@ -124,14 +125,14 @@ button:hover {
    
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
-  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more shipments)</button>
-  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more shipments)</button>
+  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button>
+  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button>
   </td>
   <td width=25%> <h2>Data Centre</h2><br>
   <p>Total Funds: $<span id="Funds">0</span></p>
   <p>Price per Hotstopper: $<span id="HSprice">0</span></p>
   <p>Hotstopper Demand:<span id="Demand">0</span>%</p>
-  <p>Hotstoppers in stock:<span id="HSstock">0</span>%</p>
+  <p>Hotstoppers in stock:<span id="HSstock">0</span></p>
   </td><td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
   </td><td width=25% id="UL3"> <h2>Project Centre</h2><br>
