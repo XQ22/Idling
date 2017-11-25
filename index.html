@@ -60,8 +60,8 @@ button:hover {
       timeEvent = false;
     }
     if(timeEvent){
-      HSstock += HSingressAuto - HSegressAuto;
-      if(Math.floor(Math.random() * 101) > (100-HSdemand)){
+      if(HSstock>0){HSstock += HSingressAuto - HSegressAuto;}
+      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>0){
         HSstock -= HSegress;
         totalFunds += HSprice;
       }
@@ -86,7 +86,7 @@ button:hover {
     HSstock += HSingress;
   };
   function HSdelivery(){
-  
+    HSstock -= HSingress;
   };
   function Employ(type){
     switch(type){
@@ -107,14 +107,32 @@ button:hover {
     display.Price = document.getElementById("HSprice");
     display.Stock = document.getElementById("HSstock");
     display.ResearchFunds = document.getElementById("RFunds");
-    display.Price = document.getElementById("HSprice");
-    display.Price = document.getElementById("HSprice");
     document.getElementById("init").style.visibility = "hidden";
     for(var i = 0;i<4;i++){
       document.getElementById("UL"+i).style.visibility = "hidden";
     }
     document.getElementById("game").style.visibility = "visible";
   };
+  function save(){
+    document.cookie = "HSC="+HScount+";path=/";
+  }
+  function getCookie(cname) { //Code from W3
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+  function load(){
+    HScount = getCookie("HSC");
+  }
 </script>
 </head>
 <body onLoad="StartTime()">
@@ -125,7 +143,8 @@ button:hover {
    
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
-  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button>
+  <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
+  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button><br>
   <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button>
   </td>
   <td width=25%> <h2>Data Centre</h2><br>
@@ -140,6 +159,7 @@ button:hover {
   </td>
   </tr></table>
   </div>
+  <button onClick="save()" id="init">SAVE</button> <button onClick="load()" id="init">LOAD</button>
 </body>
   <script>document.getElementById("game").style.visibility = "hidden";</script>
 </html>
