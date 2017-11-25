@@ -12,6 +12,9 @@ h1, h2 {
   font-family: Arial, Helvetica Neue, monospace;
 }
 
+h1 {
+  font-size: 70px;
+}
 p {
   font-family: Helvetica, Arial, monospace;
 }
@@ -99,17 +102,21 @@ button:hover {
     } else {
       if(HSprice>1){HSprice--;}
     }
-    HSdemand = 1/price;
+    HSdemand = 100/price;
   }
   function Employ(type){
     switch(type){
       case "telephonist":
-        HSingressAuto++;
-        Funds -= 10;
+        if(totalFunds>10){
+          HSingressAuto++;
+          totalFunds -= 10;
+        )
       break;
       case "salesman":
-        HSegressAuto++;
-        Funds -= 20;
+        if(totalFunds>20){
+          HSegressAuto++;
+          totalFunds -= 20;
+        )
       break;
     }
   };
@@ -127,9 +134,9 @@ button:hover {
     document.getElementById("game").style.visibility = "visible";
   };
   function save(){
-    document.cookie = "HSC="+HScount+";path=/";
+    document.cookie = "HSC="+HScount+";Funds="+totalFunds+";path=/";
   }
-  function getCookie(cname) { //Code from W3
+  function getCookie(cname) { //Cookie Code from W3
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {
@@ -145,6 +152,7 @@ button:hover {
   }
   function load(){
     HScount = getCookie("HSC");
+    totalFunds = getCookie("Funds");
   }
 </script>
 </head>
