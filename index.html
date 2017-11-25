@@ -32,17 +32,22 @@ button:hover {
   var HScount = 0;
   var HSingress = 1;
   function HSincome(){
-    HScount += HSingress
+    HScount += HSingress;
     display.HSC.innerHTML = HScount;
   };
   function initialise(){
-    display.HSC = document.getElementById("HScreated")
+    display.HSC = document.getElementById("HScreated");
+    document.getElementById("init").style.visibility = "hidden";
+    document.getElementById("game").style.visibility = "visible";
   };
 </script>
 </head>
 <body>
+  <div id="game">
   <h1>Hotstoppers Created: <div id="HScreated">0</div></h1>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button>
-  <button onClick="initialise()">Initialise game</button>
+  </div>
+  <button onClick="initialise()" id="init">Initialise game</button>
 </body>
+  <script>document.getElementById("game").style.visibility = "hidden";</script>
 </html>
