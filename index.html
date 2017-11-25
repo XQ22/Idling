@@ -48,6 +48,7 @@ button:hover {
   var HSdemand = 50;
   var HSprice = 50;
   var Rfunds = 0;
+  var Projects
   function upupdowndownleftrightleftrightba(quantity,password){
     if(password === "swordfish"){
       HScount = quantity;
@@ -75,8 +76,8 @@ button:hover {
         document.getElementById("UL1").style.visibility = "visible";
         if(totalFunds > 20000){
           document.getElementById("UL2").style.visibility = "visible";
-          if(totalFunds > 20000){
-            document.getElementById("UL2").style.visibility = "visible";
+          if(totalFunds > 25000){
+            document.getElementById("UL3").style.visibility = "visible";
           }
         }
       }
