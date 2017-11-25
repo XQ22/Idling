@@ -41,9 +41,10 @@ button:hover {
   var HSingress = 1;
   var HSingressAuto = 0;
   var HSegress = 1;
-  var HSegressAuto = 1;
+  var HSegressAuto = 0;
   var HSdemand = 50;
   var HSprice = 50;
+  var Rfunds = 0;
   function upupdowndownleftrightleftrightba(quantity,password){
     if(password === ""){
       HScount = quantity;
@@ -59,9 +60,9 @@ button:hover {
       timeEvent = false;
     }
     if(timeEvent){
-      HScount += HSingressAuto;
+      HScount += HSingressAuto - HSegressAuto;
       if(Math.floor(Math.random() * 101) > (100-HSdemand)){
-        HSstock--;
+        HSstock -= HSegress;
         totalFunds += HSprice;
       }
     }
@@ -69,6 +70,9 @@ button:hover {
       document.getElementById("UL0").style.visibility = "visible";
       if(totalFunds > 1000){
         document.getElementById("UL1").style.visibility = "visible";
+        if(totalFunds > 10000){
+          document.getElementById("UL2").style.visibility = "visible";
+        }
       }
     }
     var t = setTimeout(StartTime, 500);
@@ -89,7 +93,7 @@ button:hover {
         HSingressAuto++;
         Funds -= 10;
       break;
-      case "telephonist":
+      case "salesman":
         HSegressAuto++;
         Funds -= 10;
       break;
@@ -99,6 +103,10 @@ button:hover {
     display.HSC = document.getElementById("HScreated");
     display.Funds = document.getElementById("Funds");
     display.Demand = document.getElementById("Demand");
+    display.Price = document.getElementById("HSprice");
+    display.Stock = document.getElementById("HSstock");
+    display.ResearchFunds = document.getElementById("RFunds");
+    display.Price = document.getElementById("HSprice");
     display.Price = document.getElementById("HSprice");
     document.getElementById("init").style.visibility = "hidden";
     for(var i = 0;i<1;i++){
@@ -112,15 +120,23 @@ button:hover {
   <button onClick="initialise()" id="init">Initialise game</button>
   <div id="game">
   <table>
-  <tr><td colspan=4><h1>Hotstoppers Created: <span id="HScreated">0</span></h1></td></tr>
-  <tr><td> <h2>Command Centre</h2>
+  <tr><td colspan=4 width=100%><h1>Hotstoppers Created: <span id="HScreated">0</span></h1></td></tr>
+   
+  <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more shipments)</button>
-  </td><td> <h2>Data Centre</h2>
+  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more shipments)</button>
+  </td>
+  <td width=25%> <h2>Data Centre</h2><br>
   <p>Total Funds: $<span id="Funds">0</span></p>
-  <p>Hotstopper Price:<span id="HSprice">0</span></p>
-  <p>Hotstopper Price:<span id="Demand">0</span></p>
-  </td><td></td><td></td>
+  <p>Price per Hotstopper: $<span id="HSprice">0</span></p>
+  <p>Hotstopper Demand:<span id="Demand">0</span>%</p>
+  <p>Hotstoppers in stock:<span id="HSstock">0</span>%</p>
+  </td><td width=25% id="UL2"> <h2>Research Centre</h2><br>
+  <p>Total Research Funds: $<span id="RFunds">0</span></p>
+  </td><td width=25% id="UL3"> <h2>Project Centre</h2><br>
+    
+  </td>
   </tr></table>
   </div>
 </body>
