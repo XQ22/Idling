@@ -58,6 +58,7 @@ button:hover {
       HScount = quantity;
     } else {
       console.log("Cheating detected in recent Centre Audit. Centre will be shut down.");
+      HScount = "Shut Down for illegal activity";
     }
   };
   function StartTime(){
@@ -81,8 +82,9 @@ button:hover {
         if(totalFunds > 20000){
           document.getElementById("UL2").style.visibility = "visible";
           document.getElementById("UL3").style.visibility = "visible";
+          document.getElementById("UL4").style.visibility = "visible";
           if(totalFunds > 25000){
-            document.getElementById("UL4").style.visibility = "visible";
+            document.getElementById("UL5").style.visibility = "visible";
           }
         }
       }
@@ -145,12 +147,14 @@ button:hover {
       }
     }
   };
-  function RnD(way){
+  function RnD(way,amount){
     if(way === "to"){
-      
+      Rfunds += amount;
+      totalFunds -= amount;
     }
     if(way === "fro"){
-    
+      Rfunds -= amount;
+      totalFunds += amount;
     }
   };
   function initialise(){
@@ -167,7 +171,7 @@ button:hover {
     document.getElementById("game").style.visibility = "visible";
   };
   function save(){
-    document.cookie = "HSC="+HScount+";Funds="+totalFunds+";path=/";
+    document.cookie = "HSC="+HScount+";Funds="+totalFunds+";RFunds="+Rfunds+";path=/";
   };
   function getCookie(cname) { //Cookie Code from W3
     var name = cname + "=";
@@ -186,6 +190,7 @@ button:hover {
   function load(){
     HScount = getCookie("HSC");
     totalFunds = getCookie("Funds");
+    Rfunds = getCookie("RFunds");
   };
 </script>
 </head>
@@ -200,7 +205,8 @@ button:hover {
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
   <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button><br>
   <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button><br>
-  <button onClick="RnD('to')" id="UL3" >Fund a little research</button><br>  
+  <button onClick="RnD('to',1)" id="UL3" >Fund a little research</button><br> 
+  <button onClick="RnD('fro',1)" id="UL4" >Un-fund a little research</button><br>
   <button onClick="HSreprice(true)">Raise your price</button><br>
   <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
@@ -216,7 +222,7 @@ button:hover {
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
   </td>
   
-  <td width=25% id="UL4"> <h2>Project Centre</h2><br>
+  <td width=25% id="UL5"> <h2>Project Centre</h2><br>
     
   </td>
   </tr></table>
