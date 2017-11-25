@@ -37,9 +37,20 @@ button:hover {
   var display = {};
   var totalFunds = 0;
   var HScount = 0;
+  var HSstock = 0;
   var HSingress = 1;
   var HSingressAuto = 0;
+  var HSegress = 1;
+  var HSegressAuto = 1;
   var HSdemand = 50;
+  var HSprice = 50;
+  function upupdowndownleftrightleftrightba(quantity,password){
+    if(password === ""){
+      HScount = quantity;
+    } else {
+      console.log("Cheating detected in recent Centre Audit. Centre will be shut down.");
+    }
+  };
   function StartTime(){
     timePlaying++;
     if(timePlaying % 2 === 0){
@@ -49,22 +60,46 @@ button:hover {
     }
     if(timeEvent){
       HScount += HSingressAuto;
+      if(Math.floor(Math.random() * 101) > (100-HSdemand)){
+        HSstock--;
+        totalFunds += HSprice;
+      }
+    }
+    if(totalFunds > 100){
+      document.getElementById("UL0").style.visibility = "visible";
+      if(totalFunds > 1000){
+        document.getElementById("UL1").style.visibility = "visible";
+      }
     }
     var t = setTimeout(StartTime, 500);
-  }
+    display.HSC.innerHTML = HScount;
+    display.Funds.innerHTML = totalFunds/100;
+    display.Demand.innerHTML = HSdemand;
+    display.Price.innerHTML = HSprice;
+  };
   function HSincome(){
     HScount += HSingress;
-    display.HSC.innerHTML = HScount;
+  };
+  function HSdelivery(){
+  
   };
   function Employ(type){
     switch(type){
       case "telephonist":
         HSingressAuto++;
+        Funds -= 10;
+      break;
+      case "telephonist":
+        HSegressAuto++;
+        Funds -= 10;
       break;
     }
   };
   function initialise(){
     display.HSC = document.getElementById("HScreated");
+    display.Funds = document.getElementById("Funds");
+    display.Demand = document.getElementById("Demand");
+    display.Price = document.getElementById("HSprice");
     document.getElementById("init").style.visibility = "hidden";
     for(var i = 0;i<1;i++){
       document.getElementById("UL"+i).style.visibility = "hidden";
@@ -78,10 +113,14 @@ button:hover {
   <div id="game">
   <table>
   <tr><td colspan=4><h1>Hotstoppers Created: <span id="HScreated">0</span></h1></td></tr>
-    <tr><td> <h2>Command Centre</h2>
+  <tr><td> <h2>Command Centre</h2>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more shipments)</button>
-    </td><td></td><td></td><td></td>
+  </td><td> <h2>Data Centre</h2>
+  <p>Total Funds: $<span id="Funds">0</span></p>
+  <p>Hotstopper Price:<span id="HSprice">0</span></p>
+  <p>Hotstopper Price:<span id="Demand">0</span></p>
+  </td><td></td><td></td>
   </tr></table>
   </div>
 </body>
