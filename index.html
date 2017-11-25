@@ -83,7 +83,7 @@ button:hover {
       }
     }
     var t = setTimeout(StartTime, 50);
-    display.HSC.innerHTML = HScount;
+    display.HSCount.innerHTML = HScount;
     display.Funds.innerHTML = totalFunds/100 + "." + totalFunds%100;
     display.Demand.innerHTML = HSdemand;
     display.Price.innerHTML = HSprice;
@@ -122,7 +122,7 @@ button:hover {
     }
   };
   function initialise(){
-    display.HSC = document.getElementById("HScreated");
+    display.HSCount = document.getElementById("HScreated");
     display.Funds = document.getElementById("Funds");
     display.Demand = document.getElementById("Demand");
     display.Price = document.getElementById("HSprice");
