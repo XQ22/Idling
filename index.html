@@ -15,6 +15,10 @@ h1, h2 {
 p {
   font-family: Helvetica, Arial, monospace;
 }
+  
+table {
+  border: 0px;
+}
 
 button {
   border: none;
@@ -29,14 +33,21 @@ button:hover {
 </style>
 <script>
   var timePlaying = 0;
+  var timeEvent = true;
   var display = {};
+  var totalFunds = 0;
   var HScount = 0;
   var HSingress = 1;
   var HSingressAuto = 0;
   var HSdemand = 50;
   function StartTime(){
     timePlaying++;
-    var t = setTimeout(startTime, 500);
+    if(timePlaying % 2 === 0){
+      timeEvent = true;
+    } else {
+      timeEvent = false;
+    }
+    var t = setTimeout(StartTime, 500);
   }
   function HSincome(){
     HScount += HSingress;
@@ -59,9 +70,13 @@ button:hover {
 <body onLoad="StartTime()">
   <button onClick="initialise()" id="init">Initialise game</button>
   <div id="game">
-  <h1>Hotstoppers Created: <div id="HScreated">0</div></h1>
-  <button onClick="HSincome()">Order a shipment of hotstoppers</button>
-  <button onClick="Employ(\"telephonist\")">Hire a Telephonist (to order more shipments)</button>
+  <table>
+  <tr><td colspan=4><h1>Hotstoppers Created: <div id="HScreated">0</div></h1></td></tr>
+  <tr><td>
+  <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
+  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more shipments)</button>
+    </td><td></td><td></td><td></td>
+  </tr></table>
   </div>
 </body>
   <script>document.getElementById("game").style.visibility = "hidden";</script>
