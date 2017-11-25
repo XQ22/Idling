@@ -63,8 +63,8 @@ button:hover {
       timeEvent = false;
     }
     if(timeEvent){
-      if(HSstock>0){HSstock += HSingressAuto - HSegressAuto;}
-      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>0){
+      if(HSstock>HSEgressAuto){HSstock += HSingressAuto - HSegressAuto;}
+      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSEgress){
         HSstock -= HSegress;
         totalFunds += HSprice;
       }
@@ -160,7 +160,7 @@ button:hover {
   <button onClick="initialise()" id="init">Initialise game</button>
   <div id="game">
   <table>
-  <tr><td colspan=4 width=100%><h1>Hotstoppers Created: <span id="HScreated">0</span></h1></td></tr>
+  <tr><td colspan=4 width=100%><h1>Hotstoppers: <span id="HScreated">0</span></h1></td></tr>
    
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
