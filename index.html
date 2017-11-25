@@ -46,7 +46,7 @@ button:hover {
   var HSprice = 50;
   var Rfunds = 0;
   function upupdowndownleftrightleftrightba(quantity,password){
-    if(password === ""){
+    if(password === "swordfish"){
       HScount = quantity;
     } else {
       console.log("Cheating detected in recent Centre Audit. Centre will be shut down.");
@@ -70,8 +70,11 @@ button:hover {
       document.getElementById("UL0").style.visibility = "visible";
       if(totalFunds > 1000){
         document.getElementById("UL1").style.visibility = "visible";
-        if(totalFunds > 10000){
+        if(totalFunds > 20000){
           document.getElementById("UL2").style.visibility = "visible";
+          if(totalFunds > 20000){
+            document.getElementById("UL2").style.visibility = "visible";
+          }
         }
       }
     }
@@ -80,6 +83,8 @@ button:hover {
     display.Funds.innerHTML = totalFunds/100;
     display.Demand.innerHTML = HSdemand;
     display.Price.innerHTML = HSprice;
+    display.Stock.innerHTML = HSstock;
+    display.ResearchFunds.innerHTML = Rfunds;
   };
   function HSincome(){
     HScount += HSingress;
@@ -88,6 +93,14 @@ button:hover {
   function HSdelivery(){
     HSstock -= HSingress;
   };
+  function HSreprice(up){
+    if(up){
+      HSprice++;
+    } else {
+      if(HSprice>1){HSprice--;}
+    }
+    HSdemand = 1/price;
+  }
   function Employ(type){
     switch(type){
       case "telephonist":
@@ -146,15 +159,22 @@ button:hover {
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
   <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button><br>
   <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button>
+  <button onClick="HSreprice(true)">Raise your price</button><br>
+  <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
+    
   <td width=25%> <h2>Data Centre</h2><br>
   <p>Total Funds: $<span id="Funds">0</span></p>
   <p>Price per Hotstopper: $<span id="HSprice">0</span></p>
   <p>Hotstopper Demand:<span id="Demand">0</span>%</p>
   <p>Hotstoppers in stock:<span id="HSstock">0</span></p>
-  </td><td width=25% id="UL2"> <h2>Research Centre</h2><br>
+  </td>
+  
+  <td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
-  </td><td width=25% id="UL3"> <h2>Project Centre</h2><br>
+  </td>
+  
+  <td width=25% id="UL3"> <h2>Project Centre</h2><br>
     
   </td>
   </tr></table>
