@@ -71,7 +71,7 @@ button:hover {
     }
     if(timeEvent){
       if(HSstock>HSegressAuto){HSstock += HSingressAuto - HSegressAuto;}
-      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSEgress){
+      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSegress){
         HSstock -= HSegress;
         totalFunds += HSprice;
       }
