@@ -41,6 +41,7 @@ button:hover {
   var display = {};
   var research = {};
   var increments = [1,1,1];
+  var employed = [0,0,0];
   var wages = [10,20,50];
   var totalFunds = 0;
   var HScount = 0;
@@ -64,19 +65,12 @@ button:hover {
   };
   function StartTime(){
     timePlaying++;
-    if(timePlaying % 2 === 0){
-      timeEvent = true;
-    } else {
-      timeEvent = false;
+    if(HSstock>HSegressAuto){HSstock += HSingressAuto - HSegressAuto;}
+    if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSegress){
+      HSstock -= HSegress;
+      totalFunds += HSprice;
     }
-    if(timeEvent){
-      if(HSstock>HSegressAuto){HSstock += HSingressAuto - HSegressAuto;}
-      if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSegress){
-        HSstock -= HSegress;
-        totalFunds += HSprice;
-      }
-      HScount += HSingressAuto;
-    }
+    HScount += HSingressAuto;
     if(totalFunds > 100){
       document.getElementById("UL0").style.visibility = "visible";
       if(totalFunds > 1000){
@@ -91,6 +85,7 @@ button:hover {
         }
       }
     }
+    HSdemand = 100/HSprice;
     var t = setTimeout(StartTime, 50);
     display.HSCount.innerHTML = HScount;
     display.Funds.innerHTML = Math.floor(totalFunds/100) + "." + totalFunds%100;
@@ -112,7 +107,6 @@ button:hover {
     } else {
       if(HSprice>1){HSprice--;}
     }
-    HSdemand = 100/price;
   }
   function Employ(type){
     switch(type){
@@ -121,6 +115,7 @@ button:hover {
           HSingressAuto += increments[0];
           totalFunds -= wages[0];
           wages[0]++;
+          employed[0]++;
         }
       break;
       case "salesman":
@@ -128,6 +123,7 @@ button:hover {
           HSegressAuto += increments[1];
           totalFunds -= wages[1];
           wages[1]++;
+          employed[1]++;
         }
       break;
       case "researcher":
@@ -135,8 +131,12 @@ button:hover {
           ResearchFundingAuto += increments[2];
           totalFunds -= wages[2];
           wages[2]++;
+          employed[2]++;
         }
       break;
+    }
+    for(var i=0;i<employed.length;i++){
+      document.getElementById("Wage"+i).innerHTML = wages[i];
     }
   };
   function research(type,funds,affected,increase){
@@ -159,16 +159,25 @@ button:hover {
       totalFunds += amount;
     }
   };
+  function explain(cat,thing){
+    var c = "";
+    if(cat === "Employ"){
+      c = "Currently employed:"+employed[thing];
+    }
+    display.Info.innerHTML = c;
+  }
   function initialise(){
     display.HSCount = document.getElementById("HScreated");
+    display.Info = document.getElementById("info");
     display.Funds = document.getElementById("Funds");
     display.Demand = document.getElementById("Demand");
     display.Price = document.getElementById("HSprice");
     display.Stock = document.getElementById("HSstock");
     display.ResearchFunds = document.getElementById("RFunds");
     document.getElementById("init").style.visibility = "hidden";
-    for(var i = 0;i<6;i++){
+    for(var i = 0;i<7;i++){
       document.getElementById("UL"+i).style.visibility = "hidden";
+      document.getElementById("RL"+(i+3)).style.visibility = "hidden";
     }
     document.getElementById("game").style.visibility = "visible";
   };
@@ -206,11 +215,11 @@ button:hover {
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
-  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)</button><br>
-  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers)</button><br>
-  <button onClick="RnD('to',100)" id="UL3" >Fund a little research</button><br> 
+  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)  [$<span id="Wage0">0</span>]</button><br>
+  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers) [$<span id="Wage1">0</span>]</button><br>
+  <button onClick="RnD('to',100)" id="UL3" >Fund a little research [$1]</button><br> 
   <button onClick="RnD('fro',100)" id="UL4" >Un-fund a little research</button><br>
-  <button onClick="Employ('researcher')" id="UL6" ></button><br>
+  <button onClick="Employ('researcher')" id="UL6" >Hire a researcher</button><br>
   <button onClick="HSreprice(true)">Raise your price</button><br>
   <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
@@ -224,16 +233,27 @@ button:hover {
   
   <td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
-  <button onClick="Research("Addition",2000,6,0)">R&amp;D Auto-Funding</button><br>
-  <button onClick="Research("Enhancement",2000,0,2)">Doubly-efficient telephones</button><br>
+  <button onClick="Research("Addition",2000,6,0)" id="RL0" >R&amp;D Auto-Funding</button><br>
+  <button onClick="Research("Enhancement",2000,0,2)" id="RL1">Doubly-efficient telephonists</button><br>
+  <button onClick="Research("Enhancement",2000,1,2)" id="RL2">Doubly-efficient salesmen</button><br>
+  <button onClick="Research("Addition",20000,6,0)" id="RL3" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2)" id="RL4">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0)" id="RL5" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2)" id="RL6">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0)" id="RL7" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2)" id="RL8">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0)" id="RL9" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2)" id="RL10">Dummy</button><br>
   </td>
   
-  <td width=25% id="UL5"> <h2>Project Centre</h2><br>
+  <td width=25% id="UL5"> <h2>Podcast Centre</h2><br>
     
   </td>
   </tr></table>
   </div>
-  <button onClick="save()" id="init">SAVE</button> <button onClick="load()" id="init">LOAD</button>
+  <br><br><hr>
+  <h2>Saving (unreliable):</h2><button onClick="save()" id="init">SAVE</button> <button onClick="load()" id="init">LOAD</button><br>
+  <h2>Information:</h2><p id="info"></p>
 </body>
   <script>document.getElementById("game").style.visibility = "hidden";</script>
 </html>
