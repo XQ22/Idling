@@ -44,6 +44,7 @@ button:hover {
   var employed = [0,0,0];
   var wages = [10,20,50];
   var totalFunds = 0;
+  var marketEffectiveness = 100;
   var HScount = 0;
   var HSstock = 0;
   var HSingress = 1;
@@ -79,17 +80,14 @@ button:hover {
           document.getElementById("UL2").style.visibility = "visible";
           document.getElementById("UL3").style.visibility = "visible";
           document.getElementById("UL4").style.visibility = "visible";
-          if(totalFunds > 25000){
-            document.getElementById("UL5").style.visibility = "visible";
-          }
         }
       }
     }
-    HSdemand = 100/HSprice;
+    HSdemand = marketEffectiveness/HSprice;
     var t = setTimeout(StartTime, 50);
     display.HSCount.innerHTML = HScount;
     display.Funds.innerHTML = Math.floor(totalFunds/100) + "." + totalFunds%100;
-    display.Demand.innerHTML = HSdemand;
+    display.Demand.innerHTML = Math.floor(HSdemand*10)/10;
     display.Price.innerHTML = HSprice;
     display.Stock.innerHTML = HSstock;
     display.ResearchFunds.innerHTML = Math.floor(Rfunds/100) + "." + Rfunds%100;
@@ -182,7 +180,7 @@ button:hover {
     document.getElementById("game").style.visibility = "visible";
   };
   function save(){
-    document.cookie = "HSC="+HScount+";HSS="+HSstock+";Funds="+totalFunds+";RFunds="+Rfunds+";path=/";
+    document.cookie = "HSC="+HScount+";HSS="+HSstock+";HSP="+HSprice+";E0="+employed[0]+";E1="+employed[1]+";E2="+employed[2]+";R0="+Research[0]+";R1="+Research[1]+";R2="+Research[2]+";Funds="+totalFunds+";RFunds="+Rfunds+";path=/";
   };
   function getCookie(cname) { //Cookie Code from W3
     var name = cname + "=";
@@ -201,6 +199,15 @@ button:hover {
   function load(){
     HScount = Number(getCookie("HSC"));
     HSstock = Number(getCookie("HSS"));
+    HSprice = Number(getCookie("HSP"));
+    for(var i = 0;i<employed.length;i++){
+      employed[i] = Number(getCookie("E"+i));
+      wages[i] = wages[i] + employed[i];
+    } 
+    for(var i = 0;i<Research.length;i++){
+      Research[i] = Number(getCookie("E"+i));
+      wages[i] = wages[i] + employed[i];
+    }
     totalFunds = Number(getCookie("Funds"));
     Rfunds = Number(getCookie("RFunds"));
   };
@@ -215,11 +222,11 @@ button:hover {
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
-  <button onClick="Employ('telephonist')" id="UL0" >Hire a Telephonist (to order more hotstoppers)  [$<span id="Wage0">0</span>]</button><br>
-  <button onClick="Employ('salesman')" id="UL1" >Hire a Salesman (to sell more hotstoppers) [$<span id="Wage1">0</span>]</button><br>
+  <button onClick="Employ('telephonist')" id="UL0" onmouseover="explain('Employ',0)" >Hire a Telephonist (to order more hotstoppers)  [$<span id="Wage0">10</span>]</button><br>
+  <button onClick="Employ('salesman')" id="UL1" onmouseover="explain('Employ',1)" >Hire a Salesman (to sell more hotstoppers) [$<span id="Wage1">20</span>]</button><br>
   <button onClick="RnD('to',100)" id="UL3" >Fund a little research [$1]</button><br> 
   <button onClick="RnD('fro',100)" id="UL4" >Un-fund a little research</button><br>
-  <button onClick="Employ('researcher')" id="UL6" >Hire a researcher</button><br>
+  <button onClick="Employ('researcher')" id="UL6" onmouseover="explain('Employ',2)" >Hire a researcher [$<span id="Wage2">50</span>]</button><br>
   <button onClick="HSreprice(true)">Raise your price</button><br>
   <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
