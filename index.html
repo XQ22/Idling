@@ -36,6 +36,7 @@ button:hover {
  
 </style>
 <script>
+  var isFirefox = navigator.userAgent.indexOf("Firefox");
   var timePlaying = 0;
   var ResearchUL = true;
   var display = {};
@@ -234,7 +235,7 @@ button:hover {
   };
 </script>
 </head>
-<body onLoad="StartTime()">
+<body onLoad="StartTime()" id="body" >
   <button onClick="initialise()" id="init">Initialise game</button>
   <div id="game">
   <table>
@@ -285,5 +286,10 @@ button:hover {
   <br><br>
   <p>*Unreliable, uses cookies</p>
 </body>
-  <script>document.getElementById("game").style.visibility = "hidden";</script>
+  <script>
+    document.getElementById("game").style.visibility = "hidden";
+    if(isFirefox == -1){
+      document.getElementById("body").innerHTML = "<h2>Sorry, but this game seems to have bizarre problems with non-Firefox browsers.</h2>";
+    }
+  </script>
 </html>
