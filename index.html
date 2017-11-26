@@ -37,7 +37,7 @@ button:hover {
 </style>
 <script>
   var timePlaying = 0;
-  var timeEvent = true;
+  var ResearchUL = true;
   var display = {};
   var research = {};
   var increments = [1,1,1];
@@ -72,7 +72,7 @@ button:hover {
       totalFunds += HSprice;
     }
     HScount += HSingressAuto;
-    while(Rfunds === 0){
+    while(!ResearchUL){
       if(totalFunds > 100){
         document.getElementById("UL0").style.visibility = "visible";
         if(totalFunds > 1000){
@@ -81,6 +81,7 @@ button:hover {
             document.getElementById("UL2").style.visibility = "visible";
             document.getElementById("UL3").style.visibility = "visible";
             document.getElementById("UL4").style.visibility = "visible";
+            ResearchUL = true;
           }
         }
       }
@@ -185,6 +186,7 @@ button:hover {
     display.Info.innerHTML = c;
   };
   function initialise(){
+    ResearchUL = false;
     display.HSCount = document.getElementById("HScreated");
     display.Info = document.getElementById("info");
     display.Funds = document.getElementById("Funds");
