@@ -72,14 +72,16 @@ button:hover {
       totalFunds += HSprice;
     }
     HScount += HSingressAuto;
-    if(totalFunds > 100){
-      document.getElementById("UL0").style.visibility = "visible";
-      if(totalFunds > 1000){
-        document.getElementById("UL1").style.visibility = "visible";
-        if(totalFunds > 20000){
-          document.getElementById("UL2").style.visibility = "visible";
-          document.getElementById("UL3").style.visibility = "visible";
-          document.getElementById("UL4").style.visibility = "visible";
+    while(Rfunds === 0){
+      if(totalFunds > 100){
+        document.getElementById("UL0").style.visibility = "visible";
+        if(totalFunds > 1000){
+          document.getElementById("UL1").style.visibility = "visible";
+          if(totalFunds > 20000){
+            document.getElementById("UL2").style.visibility = "visible";
+            document.getElementById("UL3").style.visibility = "visible";
+            document.getElementById("UL4").style.visibility = "visible";
+          }
         }
       }
     }
@@ -88,7 +90,7 @@ button:hover {
     display.HSCount.innerHTML = HScount;
     display.Funds.innerHTML = Math.floor(totalFunds/100) + "." + totalFunds%100;
     display.Demand.innerHTML = Math.floor(HSdemand*10)/10;
-    display.Price.innerHTML = HSprice;
+    display.Price.innerHTML = Math.floor(HSprice/100) + "." + HSprice%100;
     display.Stock.innerHTML = HSstock;
     display.ResearchFunds.innerHTML = Math.floor(Rfunds/100) + "." + Rfunds%100;
   };
@@ -98,6 +100,7 @@ button:hover {
   };
   function HSdelivery(){
     HSstock -= HSingress;
+    totalFunds += HSprice;
   };
   function HSreprice(up){
     if(up){
@@ -105,33 +108,35 @@ button:hover {
     } else {
       if(HSprice>1){HSprice--;}
     }
-  }
+  };
   function Employ(type){
-    switch(type){
-      case "telephonist":
-        if(totalFunds>10){
-          HSingressAuto += increments[0];
-          totalFunds -= wages[0];
-          wages[0]++;
-          employed[0]++;
-        }
-      break;
-      case "salesman":
-        if(totalFunds>20){
-          HSegressAuto += increments[1];
-          totalFunds -= wages[1];
-          wages[1]++;
-          employed[1]++;
-        }
-      break;
-      case "researcher":
-        if(totalFunds>20){
-          ResearchFundingAuto += increments[2];
-          totalFunds -= wages[2];
-          wages[2]++;
-          employed[2]++;
-        }
-      break;
+    if(totalFunds>wages[type]){
+      switch(type){
+        case "telephonist":
+          if(totalFunds>10){
+            HSingressAuto += increments[0];
+            totalFunds -= wages[0];
+            wages[0]++;
+            employed[0]++;
+          }
+        break;
+        case "salesman":
+          if(totalFunds>20){
+            HSegressAuto += increments[1];
+            totalFunds -= wages[1];
+            wages[1]++;
+            employed[1]++;
+          }
+        break;
+        case "researcher":
+          if(totalFunds>20){
+            ResearchFundingAuto += increments[2];
+            totalFunds -= wages[2];
+            wages[2]++;
+            employed[2]++;
+          }
+        break;
+      }
     }
     for(var i=0;i<employed.length;i++){
       document.getElementById("Wage"+i).innerHTML = wages[i];
@@ -162,8 +167,23 @@ button:hover {
     if(cat === "Employ"){
       c = "Currently employed:"+employed[thing];
     }
+    if(cat === "HScount"){
+      if(HScount < 1000){
+        c = HScount + " hotstoppers";
+      } else if(HScount < 1000000){
+        c = Math.floor(HScount/100)/10 + " thousand hotstoppers";
+      } else if(HScount < 1000000000){
+        c = Math.floor(HScount/100000)/10 + " million hotstoppers";
+      } else if(HScount < 8000000000){
+        c = Math.floor(HScount/100000000)/10 + " billion hotstoppers";
+      } else if(HScount < 1000000000000){
+        c = Math.floor(HScount/100000000)/80 + " hotstoppers per person on Earth";
+      } else {
+        c = "That is just a huge number of hotstoppers";
+      }
+    }
     display.Info.innerHTML = c;
-  }
+  };
   function initialise(){
     display.HSCount = document.getElementById("HScreated");
     display.Info = document.getElementById("info");
@@ -205,8 +225,7 @@ button:hover {
       wages[i] = wages[i] + employed[i];
     } 
     for(var i = 0;i<Research.length;i++){
-      Research[i] = Number(getCookie("E"+i));
-      wages[i] = wages[i] + employed[i];
+      Research[i] = Number(getCookie("R"+i));
     }
     totalFunds = Number(getCookie("Funds"));
     Rfunds = Number(getCookie("RFunds"));
@@ -217,16 +236,16 @@ button:hover {
   <button onClick="initialise()" id="init">Initialise game</button>
   <div id="game">
   <table>
-  <tr><td colspan=4 width=100%><h1>Hotstoppers: <span id="HScreated">0</span></h1></td></tr>
+  <tr><td colspan=4 width=100%><h1>Hotstoppers: <span id="HScreated" onmousemove="explain('HScount',0)" >0</span></h1></td></tr>
    
   <tr><td width=25%> <h2>Command Centre</h2><br>
   <button onClick="HSincome()">Order a shipment of hotstoppers</button><br>
   <button onClick="HSdelivery()">Deliver a shipment of hotstoppers</button><br>
-  <button onClick="Employ('telephonist')" id="UL0" onmouseover="explain('Employ',0)" >Hire a Telephonist (to order more hotstoppers)  [$<span id="Wage0">10</span>]</button><br>
-  <button onClick="Employ('salesman')" id="UL1" onmouseover="explain('Employ',1)" >Hire a Salesman (to sell more hotstoppers) [$<span id="Wage1">20</span>]</button><br>
+  <button onClick="Employ('telephonist')" id="UL0" onmousemove="explain('Employ',0)" >Hire a Telephonist (to order more hotstoppers)  [$<span id="Wage0">10</span>]</button><br>
+  <button onClick="Employ('salesman')" id="UL1" onmousemove="explain('Employ',1)" >Hire a Salesman (to sell more hotstoppers) [$<span id="Wage1">20</span>]</button><br>
   <button onClick="RnD('to',100)" id="UL3" >Fund a little research [$1]</button><br> 
   <button onClick="RnD('fro',100)" id="UL4" >Un-fund a little research</button><br>
-  <button onClick="Employ('researcher')" id="UL6" onmouseover="explain('Employ',2)" >Hire a researcher [$<span id="Wage2">50</span>]</button><br>
+  <button onClick="Employ('researcher')" id="UL6" onmousemove="explain('Employ',2)" >Hire a researcher [$<span id="Wage2">50</span>]</button><br>
   <button onClick="HSreprice(true)">Raise your price</button><br>
   <button onClick="HSreprice(false)">Lower your price</button><br>
   </td>
@@ -259,8 +278,10 @@ button:hover {
   </tr></table>
   </div>
   <br><br><hr>
-  <h2>Saving (unreliable):</h2><button onClick="save()" id="init">SAVE</button> <button onClick="load()" id="init">LOAD</button><br>
+  <h2>Saving*:</h2><button onClick="save()" id="init">SAVE</button> <button onClick="load()" id="init">LOAD</button><br>
   <h2>Information:</h2><p id="info"></p>
+  <br><br>
+  <p>*Unreliable, uses cookies</p>
 </body>
   <script>document.getElementById("game").style.visibility = "hidden";</script>
 </html>
