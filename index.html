@@ -75,6 +75,7 @@ button:hover {
         HSstock -= HSegress;
         totalFunds += HSprice;
       }
+      HScount += HSingressAuto;
     }
     if(totalFunds > 100){
       document.getElementById("UL0").style.visibility = "visible";
@@ -92,11 +93,11 @@ button:hover {
     }
     var t = setTimeout(StartTime, 50);
     display.HSCount.innerHTML = HScount;
-    display.Funds.innerHTML = totalFunds/100 + "." + totalFunds%100;
+    display.Funds.innerHTML = Math.floor(totalFunds/100) + "." + totalFunds%100;
     display.Demand.innerHTML = HSdemand;
     display.Price.innerHTML = HSprice;
     display.Stock.innerHTML = HSstock;
-    display.ResearchFunds.innerHTML = Rfunds;
+    display.ResearchFunds.innerHTML = Math.floor(Rfunds/100) + "." + Rfunds%100;
   };
   function HSincome(){
     HScount += HSingress;
@@ -144,7 +145,7 @@ button:hover {
         document.getElementById("UL"+affected).style.visibility = "visible";
       }
       if(type==="Enhancement"){
-        increments[affected] += increase;
+        increments[affected] *= increase;
       }
     }
   };
@@ -172,7 +173,7 @@ button:hover {
     document.getElementById("game").style.visibility = "visible";
   };
   function save(){
-    document.cookie = "HSC="+HScount+";Funds="+totalFunds+";RFunds="+Rfunds+";path=/";
+    document.cookie = "HSC="+HScount+";HSS="+HSstock+";Funds="+totalFunds+";RFunds="+Rfunds+";path=/";
   };
   function getCookie(cname) { //Cookie Code from W3
     var name = cname + "=";
@@ -189,9 +190,10 @@ button:hover {
     return "";
   };
   function load(){
-    HScount = getCookie("HSC");
-    totalFunds = getCookie("Funds");
-    Rfunds = getCookie("RFunds");
+    HScount = Number(getCookie("HSC"));
+    HSstock = Number(getCookie("HSS"));
+    totalFunds = Number(getCookie("Funds"));
+    Rfunds = Number(getCookie("RFunds"));
   };
 </script>
 </head>
@@ -223,6 +225,7 @@ button:hover {
   <td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
   <button onClick="Research("Addition",2000,6,0)">R&amp;D Auto-Funding</button><br>
+  <button onClick="Research("Enhancement",2000,0,2)">Doubly-efficient telephones</button><br>
   </td>
   
   <td width=25% id="UL5"> <h2>Project Centre</h2><br>
