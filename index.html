@@ -72,7 +72,7 @@ button:hover {
       totalFunds += HSprice;
     }
     HScount += HSingressAuto;
-    while(!ResearchUL){
+    if(!ResearchUL){
       if(totalFunds > 100){
         document.getElementById("UL0").style.visibility = "visible";
         if(totalFunds > 1000){
