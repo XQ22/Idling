@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Hotstopper Distribution Centre</title>
-<link rel="shortcut icon" type="image/x-icom" href="flag.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="flag.ico" />
 <style>
 body {
   background-color: #252630;
@@ -118,28 +118,22 @@ button:hover {
     if(totalFunds>wages[type]){
       switch(type){
         case "telephonist":
-          if(totalFunds>10){
-            HSingressAuto += increments[0];
-            totalFunds -= wages[0];
-            wages[0]++;
-            employed[0]++;
-          }
+          HSingressAuto += increments[0];
+          totalFunds -= wages[0];
+          wages[0]++;
+          employed[0]++;
         break;
         case "salesman":
-          if(totalFunds>20){
-            HSegressAuto += increments[1];
-            totalFunds -= wages[1];
-            wages[1]++;
-            employed[1]++;
-          }
+          HSegressAuto += increments[1];
+          totalFunds -= wages[1];
+          wages[1]++;
+          employed[1]++;
         break;
         case "researcher":
-          if(totalFunds>20){
-            ResearchFundingAuto += increments[2];
-            totalFunds -= wages[2];
-            wages[2]++;
-            employed[2]++;
-          }
+          ResearchFundingAuto += increments[2];
+          totalFunds -= wages[2];
+          wages[2]++;
+          employed[2]++;
         break;
       }
     }
@@ -155,20 +149,29 @@ button:hover {
       if(type==="Enhancement"){
         increments[affected] *= increase;
       }
+      if(type==="Perk"){
+        Perks[affected] *= increase;
+      }
       document.getElementById("RL"+id).style.visibility = "hidden";
       Rfunds -= funds;
-      Research[id] = GoThroArray(Research,"max") + 1;
+      Research[GoThroArray(Research,"find",id)] = GoThroArray(Research,"max",0) + 1;
     }
     for(var i = 0;i<Research.length;i++){
       document.getElementById("RL"+i).style.visibility = "visible";
     }
   };
-  function GoThroArray(a,g){
+  function GoThroArray(a,g,n){
     var c = 0;
     if(g==="max"){
       for(var i = 0;i<a.length;i++){
         if(a[i]>c){
           c = a[i];
+        }
+      }
+    } else if(g==="find"){
+      for(var i = 0;i<a.length;i++){
+        if(a[i]===n){
+          c = i;
         }
       }
     }
@@ -188,6 +191,9 @@ button:hover {
     var c = "";
     if(cat === "Employ"){
       c = "Currently employed:"+employed[thing]+"<br>Efficiency:"+(100*increments[thing])+"%";
+    }
+    if(cat==="Research"){
+      c = thing;
     }
     if(cat === "HScount"){
       if(HScount < 1000){
@@ -282,18 +288,18 @@ button:hover {
   
   <td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
-  <button onClick="Research("Addition",2000,6,0)" id="RL0" >R&amp;D Auto-Funding</button><br>
-  <button onClick="Research("Enhancement",2000,0,2)" id="RL1">Doubly-efficient telephonists</button><br>
-  <button onClick="Research("Enhancement",2000,1,2)" id="RL2">Doubly-efficient salesmen</button><br>
-  <button onClick="Research("Addition",20000,6,0)" id="RL3" >Dummy</button><br>
-  <button onClick="Research("Enhancement",20000,0,2)" id="RL4">Dummy</button><br>
-  <button onClick="Research("Addition",20000,6,0)" id="RL5" >Dummy</button><br>
-  <button onClick="Research("Enhancement",20000,0,2)" id="RL6">Dummy</button><br>
-  <button onClick="Research("Addition",20000,6,0)" id="RL7" >Dummy</button><br>
-  <button onClick="Research("Enhancement",20000,0,2)" id="RL8">Dummy</button><br>
-  <button onClick="Research("Addition",20000,6,0)" id="RL9" >Dummy</button><br>
-  <button onClick="Research("Enhancement",20000,0,2)" id="RL10">Dummy</button><br>
-  <button onClick="Research("Addition",2000000,0,2)" id="RL11">Start a Podcast</button>
+  <button onClick="Research("Addition",2000,6,0,0)" id="RL0" >R&amp;D Auto-Funding</button><br>
+  <button onClick="Research("Enhancement",2000,0,2,1)" id="RL1">Doubly-efficient telephonists</button><br>
+  <button onClick="Research("Enhancement",2000,1,2,2)" id="RL2">Doubly-efficient salesmen</button><br>
+  <button onClick="Research("Perk",20000,1,0,30)" id="RL3" >Spacious packaging</button><br>
+  <button onClick="Research("Enhancement",20000,0,2,4)" id="RL4">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0,5)" id="RL5" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2,6)" id="RL6">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0,7)" id="RL7" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2,8)" id="RL8">Dummy</button><br>
+  <button onClick="Research("Addition",20000,6,0,9)" id="RL9" >Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2,10)" id="RL10">Dummy</button><br>
+  <button onClick="Research("Addition",2000000,0,2,11)" id="RL11">Start a Podcast</button>
   </td>
   
   <td width=25% id="UL5"> <h2>Podcast Centre</h2><br>
