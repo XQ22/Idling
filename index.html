@@ -57,6 +57,7 @@ button:hover {
   var Rfunds = 0;
   var Research = [0,1,2];
   var ResearchFundingAuto = 0;
+  var Perks = [1,1];
   function upupdowndownleftrightleftrightba(quantity,password){
     if(password === "swordfish"){
       HScount = quantity;
@@ -97,12 +98,14 @@ button:hover {
     display.ResearchFunds.innerHTML = Math.floor(Rfunds/100) + "." + Rfunds%100;
   };
   function HSincome(){
-    HScount += HSingress;
-    HSstock += HSingress;
+    HScount += Perks[0]*HSingress;
+    HSstock += Perks[0]*HSingress;
   };
   function HSdelivery(){
-    HSstock -= HSingress;
-    totalFunds += HSprice;
+    if(HSstock>HSegress){
+      HSstock -= Perks[1]*HSegress;
+      totalFunds += Perks[1]*HSprice;
+    }
   };
   function HSreprice(up){
     if(up){
@@ -144,7 +147,7 @@ button:hover {
       document.getElementById("Wage"+i).innerHTML = wages[i];
     }
   };
-  function research(type,funds,affected,increase){
+  function research(type,funds,affected,increase,id){
     if(Rfunds>funds){
       if(type==="Addition"){
         document.getElementById("UL"+affected).style.visibility = "visible";
@@ -152,7 +155,24 @@ button:hover {
       if(type==="Enhancement"){
         increments[affected] *= increase;
       }
+      document.getElementById("RL"+id).style.visibility = "hidden";
+      Rfunds -= funds;
+      Research[id] = GoThroArray(Research,"max") + 1;
     }
+    for(var i = 0;i<Research.length;i++){
+      document.getElementById("RL"+i).style.visibility = "visible";
+    }
+  };
+  function GoThroArray(a,g){
+    var c = 0;
+    if(g==="max"){
+      for(var i = 0;i<a.length;i++){
+        if(a[i]>c){
+          c = a[i];
+        }
+      }
+    }
+    return c;
   };
   function RnD(way,amount){
     if(way === "to"){
@@ -167,7 +187,7 @@ button:hover {
   function explain(cat,thing){
     var c = "";
     if(cat === "Employ"){
-      c = "Currently employed:"+employed[thing];
+      c = "Currently employed:"+employed[thing]+"<br>Efficiency:"+(100*increments[thing])+"%";
     }
     if(cat === "HScount"){
       if(HScount < 1000){
@@ -273,6 +293,7 @@ button:hover {
   <button onClick="Research("Enhancement",20000,0,2)" id="RL8">Dummy</button><br>
   <button onClick="Research("Addition",20000,6,0)" id="RL9" >Dummy</button><br>
   <button onClick="Research("Enhancement",20000,0,2)" id="RL10">Dummy</button><br>
+  <button onClick="Research("Addition",2000000,0,2)" id="RL11">Start a Podcast</button>
   </td>
   
   <td width=25% id="UL5"> <h2>Podcast Centre</h2><br>
