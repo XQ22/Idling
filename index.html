@@ -69,12 +69,16 @@ button:hover {
   };
   function StartTime(){
     timePlaying++;
-    if(HSstock>HSegressAuto){HSstock += HSingressAuto - HSegressAuto;}
+    if(HSstock>HSegressAuto){
+      HSstock += HSingressAuto - HSegressAuto;
+      totalfunds += HSegressAuto * HSprice;
+    } else {
+      HSstock += HSingressAuto;
+    }
     if(Math.floor(Math.random() * 101) > (100-HSdemand)&&HSstock>HSegress){
       HSstock -= HSegress;
       totalFunds += HSprice;
     }
-    HScount += HSingressAuto;
     if(!ResearchUL){
       if(totalFunds > 100){
         document.getElementById("UL0").style.visibility = "visible";
