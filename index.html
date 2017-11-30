@@ -44,6 +44,7 @@ button:hover {
   var increments = [1,1,1];
   var employed = [0,0,0];
   var wages = [10,20,50];
+  var jobs = ["telephonist","salesman","researcher"];
   var totalFunds = 0;
   var marketEffectiveness = 100;
   var HScount = 0;
@@ -115,7 +116,7 @@ button:hover {
     }
   };
   function Employ(type){
-    if(totalFunds>wages[type]){
+    if(totalFunds>wages[GoThroArray(jobs,"find",type)]){
       switch(type){
         case "telephonist":
           HSingressAuto += increments[0];
@@ -288,11 +289,11 @@ button:hover {
   
   <td width=25% id="UL2"> <h2>Research Centre</h2><br>
   <p>Total Research Funds: $<span id="RFunds">0</span></p>
-  <button onClick="Research("Addition",2000,6,0,0)" id="RL0" >R&amp;D Auto-Funding</button><br>
+  <button onClick="Research("Addition",2000,6,0,0)" id="RL0" onmousemove="explain('Research','Unlocks the researcher, meaning you don't have to click the \"Fund a little research\" button')" >R&amp;D Auto-Funding</button><br>
   <button onClick="Research("Enhancement",2000,0,2,1)" id="RL1">Doubly-efficient telephonists</button><br>
   <button onClick="Research("Enhancement",2000,1,2,2)" id="RL2">Doubly-efficient salesmen</button><br>
   <button onClick="Research("Perk",20000,1,0,30)" id="RL3" >Spacious packaging</button><br>
-  <button onClick="Research("Enhancement",20000,0,2,4)" id="RL4">Dummy</button><br>
+  <button onClick="Research("Enhancement",20000,0,2,4)" id="RL4">CEO cred</button><br>
   <button onClick="Research("Addition",20000,6,0,5)" id="RL5" >Dummy</button><br>
   <button onClick="Research("Enhancement",20000,0,2,6)" id="RL6">Dummy</button><br>
   <button onClick="Research("Addition",20000,6,0,7)" id="RL7" >Dummy</button><br>
