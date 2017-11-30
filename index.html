@@ -139,7 +139,7 @@ button:hover {
       }
     }
     for(var i=0;i<employed.length;i++){
-      document.getElementById("Wage"+i).innerHTML = wages[i];
+      document.getElementById("Wage"+i).innerHTML = Math.floor(wages[i]/100) + "." + wages[i]%100;;
     }
   };
   function research(type,funds,affected,increase,id){
