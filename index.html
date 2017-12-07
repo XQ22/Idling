@@ -11,34 +11,33 @@ body {
 h1, h2 {
   font-family: Arial, Helvetica Neue, monospace;
 }
-
 h1 {
   font-size: 70px;
 }
 p {
   font-family: Helvetica, Arial, monospace;
 }
-  
-table {
-  border: 0px;
-}
-
 button {
   border: none;
   -webkit-transition-duration: 0.5s;
   transition-duration: 0.5s;
 }
-
 button:hover {
   color: #ccced2;
 }
  
 </style>
 <script>
-  
+var time = 0;
+function Temporal(){
+  setTimeout(Temporal,50);
+  time++;
+  document.getElementById("t").InnerHTML = Math.floor(time/20);
+};
 </script>
 </head>
 <body onLoad="" id="body" >
-  
+<h1>Time Spent playing this terrible game: <span id="t"></span> seconds</h1>
+<div id="text"><p></p></div>
 </body>
 </html>
